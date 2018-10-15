@@ -1,0 +1,103 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SD226781_Samples</title>
+
+    <!-- Autodesk Forge libs-->
+    <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/6.*/style.min.css" type="text/css">
+    <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/6.*/viewer3D.min.js"></script>
+
+    <!-- custom libs-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.1/ace.js" integrity="sha256-kCykSp9wgrszaIBZpbagWbvnsHKXo4noDEi6ra6Y43w=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="./css/main.css" type="text/css">
+    <script src="./extensions/EditorExt.js"></script>
+
+
+</head>
+<body>
+    <div id="page_navigation">
+        <a href="./03.html" class="arrow-left" ></a>
+        <span> Custom Geometry </span>
+        <a href="./05.html" class="arrow-right"></a>
+    </div>
+    <!-- The Viewer will be instantiated here -->
+    <div id="MyViewerDiv"></div>
+
+</body>
+    <!-- Developer JS -->
+<script>
+
+    const divID = 'MyViewerDiv';
+    const documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6Y2xvY2tfcmVwby8wMUR1bW15LmYzZA';
+    const tokenFetchingUrl = "https://9irt90dm6j.execute-api.us-east-1.amazonaws.com/prod";
+
+    let extensionArray = [];
+
+    let viewerApp = new Autodesk.Viewing.ViewingApplication(divID);
+    let viewer = null;
+
+    let options = {
+        env: 'AutodeskProduction',
+        getAccessToken: (onGetAccessToken) => {
+            fetch(tokenFetchingUrl)
+                .then(response => response.json())
+                .then(data => {
+
+                    let accessToken = data["access_token"];
+                    let expireTimeSeconds = data["expires_in"];
+                    onGetAccessToken(accessToken, expireTimeSeconds);
+                })
+
+
+        },
+        useADP: false,
+    };
+
+    let config3d = {
+        extensions: extensionArray
+    };
+
+
+    Autodesk.Viewing.Initializer(options, function onInitialized() {
+        viewerApp.registerViewer(viewerApp.k3D, Autodesk.Viewing.Private.GuiViewer3D, config3d);
+        viewerApp.loadDocument(documentId, onDocumentLoadSuccess, onDocumentLoadFailure);
+    });
+
+    // Init after the viewer is ready
+    function onDocumentLoadSuccess() {
+        let viewables = viewerApp.bubble.search({
+            'type': 'geometry'
+        });
+        if (viewables.length === 0) {
+            console.error('Document contains no viewables.');
+            return;
+        }
+        // Choose any of the available viewables
+        viewerApp.selectItem(viewables[0].data, onItemLoadSuccess, onItemLoadFail);
+
+    }
+
+    function onDocumentLoadFailure(viewerErrorCode) {
+        console.error('onDocumentLoadFailure() - errorCode:' + viewerErrorCode);
+    }
+
+    function onItemLoadSuccess(active_viewer, item) {
+        console.log('Document loaded successfully');
+        viewer = active_viewer;
+
+        viewer.loadExtension('EditorExtension').then(
+            function(myExtension) {
+
+                myExtension.setExtensionParams("TransformExtension", "/extensions/TransformExt.js");
+            })
+    }
+    function onItemLoadFail(errorCode) {
+        console.error('onItemLoadFail() - errorCode:' + errorCode);
+    }
+
+</script>
+
+</html>
+
+

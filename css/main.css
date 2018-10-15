@@ -1,0 +1,122 @@
+body {
+    margin: 0;
+}
+#MyViewerDiv {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    background-color: #F0F8FF;
+}
+
+#editorContainer {
+    top: 10px;
+    left: 10px;
+    width: 500px;
+    height: 80vh;
+    resize: vertical;
+    max-height: 80vh;
+}
+
+#editor_area {
+    position: absolute;
+    top: 50px;
+    bottom: 15px;
+    left: 0;
+    right:0;
+    /*max-height: 90vh;*/
+    /*right: 10px;*/
+    /*top: 20%;*/
+    /*height: auto;*/
+    /*width: 30%;*/
+    /*min-width: 400px;*/
+    /*left: 0;*/
+    /*z-index: 99;*/
+    border: black 1px solid;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: auto 50px;
+}
+#editor {
+    /*position: absolute;*/
+    top: 0;
+    /*right: 10px;*/
+    /*bottom: 50px;*/
+    /*min-height: 500px;*/
+    /*height: auto;*/
+    /*width: 400px;*/
+    left: 0;
+    /*z-index: 99;*/
+    border: black 1px solid;
+}
+
+#page_navigation {
+    position: absolute;
+    top: 2%;
+    left: 45%;
+    z-index: 98;
+    display: grid;
+    grid-template-columns: 15px 140px 15px;
+    /*grid-template-rows: 30px;*/
+    padding: 7px;
+    line-height: 20px;
+    /*box-shadow: rgb(209, 199, 184) 0px 0px 12px;*/
+    box-shadow: rgb(209, 209, 209) 0px 0px 12px;
+    text-align: center;
+    color: black;
+    font-size: medium;
+
+    border-radius: 5px;
+    transition: 1s;
+}
+
+#page_navigation:hover {
+    box-shadow: rgb(255,255,255) 0px 0px 12px;
+}
+
+.arrow-right {
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid gray;
+
+}
+
+.arrow-left {
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right:10px solid gray;
+    padding-left: 5px;
+
+}
+
+#buttonContainer {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 100%;
+    margin: 0px;
+    padding: 0px;
+    border: black 1px solid;
+    height: 30px;
+}
+
+.codeButton {
+    border: 0;
+    background: none;
+    box-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+    border-radius: 0px;
+    border: black 1px solid;
+    height: 100%;
+    font-size: large;
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.toolbarButtonEditor {
+    background-image: url(../img/application_xml.png);
+    background-size: 36px;
+    background-repeat: no-repeat;
+    background-position: center;
+}

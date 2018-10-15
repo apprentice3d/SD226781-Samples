@@ -1,0 +1,1 @@
+Icons taken from https://findicons.com/icon/238224/application_xml
