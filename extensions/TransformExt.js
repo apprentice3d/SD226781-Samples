@@ -80,6 +80,7 @@ class TransformExtension extends Autodesk.Viewing.Extension {
         this.viewer = viewer;
 
         this.some_mesh = null;
+        this.defaultState = null;
 
         this.customize = this.customize.bind(this);
     }
@@ -94,41 +95,19 @@ class TransformExtension extends Autodesk.Viewing.Extension {
 
     unload() {
         console.log('TransformExtension is now unloaded!');
-        this.viewer.impl.scene.remove(this.some_mesh);
-        this.viewer.impl.sceneUpdated(true);
+        this.viewer.restoreState(this.defaultState);
+
         return true;
     }
 
     customize() {
 
         //Start custom code here ...
+        this.defaultState = this.viewer.getState();
         this.viewer.restoreState(someViewerState);
         this.viewer.impl.setPostProcessParameter("style", "edging");
         this.viewer.impl.setPostProcessParameter("depthEdges", false);
         this.viewer.setBackgroundColor(255,255,255,255,255,255);
-
-
-        let color = 0xff0000;
-
-        let geometry = new THREE.BoxGeometry(1000, 2000, 3000);
-        const material = new THREE.MeshPhongMaterial({
-            specular: new THREE.Color(color),
-            side: THREE.DoubleSide,
-            color,
-            transparent: true,
-            opacity: 0.5
-        });
-
-        this.some_mesh = new THREE.Mesh(geometry, material);
-
-        this.viewer.impl.scene.add(this.some_mesh);
-
-        const materials = this.viewer.impl.getMaterials();
-
-        materials.addMaterial(
-            color.toString(16), material, true);
-
-        this.viewer.impl.sceneUpdated(true);
 
     }
 }

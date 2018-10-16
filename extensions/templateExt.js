@@ -31,3 +31,7 @@ Autodesk.Viewing.theExtensionManager.registerExtension('TemplateExtension',
 /* some simple illustrations*/
 // this.viewer.setEnvMapBackground(false);
 // this.viewer.setBackgroundColor(234, 136, 89, 240,235,223);
+
+// this.viewer.setLightPreset(13);
+// this.viewer.impl.setPostProcessParameter("style", "edging");
+// this.viewer.impl.setPostProcessParameter("depthEdges", false);

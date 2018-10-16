@@ -94,7 +94,7 @@ class EditorExtension extends Autodesk.Viewing.Extension {
 
         const editArea = document.getElementById("editor");
 
-        fetch("http://" + self.location.host + extensionLocation)
+        fetch(document.location.origin + extensionLocation)
             .then(result => result.text())
             .then(content =>{
                 this.editor.setValue(content, 1);
