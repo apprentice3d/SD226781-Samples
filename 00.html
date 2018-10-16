@@ -4,8 +4,8 @@
     <title>SD226781_Samples</title>
 
     <!-- Autodesk Forge libs-->
-    <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/6.*/style.min.css" type="text/css">
-    <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/6.*/viewer3D.min.js"></script>
+    <link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.min.css?v=3.3.1" type="text/css">
+    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.js?v=3.3.1"></script>
 
     <!-- custom libs-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.1/ace.js" integrity="sha256-kCykSp9wgrszaIBZpbagWbvnsHKXo4noDEi6ra6Y43w=" crossorigin="anonymous"></script>
@@ -17,9 +17,9 @@
 </head>
 <body>
     <div id="page_navigation">
-        <a href="./01.html" class="arrow-left" ></a>
-        <span> Simple Extension </span>
-        <a href="./02.html" class="arrow-right"></a>
+        <a href="./index.html" class="arrow-left" ></a>
+        <span> WebVR Extension </span>
+        <a href="./01.html" class="arrow-right"></a>
     </div>
     <!-- The Viewer will be instantiated here -->
     <div id="MyViewerDiv"></div>
@@ -27,6 +27,10 @@
 </body>
     <!-- Developer JS -->
 <script>
+
+
+    // const avp = Autodesk.Viewing.Private;
+    // const av = Autodesk.Viewing;
 
     const divID = 'MyViewerDiv';
     const documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6ZXhwZXJpbWVudF9yZXBvL0hlbGxvJTIwV29ybGQucnZ0';
@@ -55,7 +59,8 @@
     };
 
     let config3d = {
-        extensions: extensionArray
+        extensions: extensionArray,
+        // experimental: [ 'webVR_orbitModel' ]
     };
 
 
@@ -89,7 +94,7 @@
         viewer.loadExtension('EditorExtension').then(
             function(myExtension) {
 
-                myExtension.setExtensionParams("TemplateExtension", "/extensions/templateExt.js");
+                myExtension.setExtensionParams("Autodesk.Viewing.WebVR", "/extensions/WebVR.js");
             })
     }
     function onItemLoadFail(errorCode) {
