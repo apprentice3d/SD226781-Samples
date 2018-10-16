@@ -93,8 +93,15 @@ class EditorExtension extends Autodesk.Viewing.Extension {
         // let sampleExtension = "TemplateExtension";
 
         const editArea = document.getElementById("editor");
-        console.log("loading " + extensionName + " extension from: ", document.location.origin + extensionLocation);
-        fetch(document.location.origin + extensionLocation)
+        let relativeLocation = document.location.origin;
+        if (document.location.hostname !== "localhost") {
+            // designed for GitHub pages
+            relativeLocation += "/SD226781-Samples"
+        }
+        relativeLocation += extensionLocation;
+
+        console.log("loading " + extensionName + " extension from: ", relativeLocation);
+        fetch(relativeLocation)
             .then(result => result.text())
             .then(content =>{
                 this.editor.setValue(content, 1);
