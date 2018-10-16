@@ -49,7 +49,7 @@ class EditorExtension extends Autodesk.Viewing.Extension {
             <div id="editor">// code placeholder</div>
             <div id="buttonContainer">
                 <button id="load" class="codeButton";">Load</button>
-                <button id="unload" class="codeButton">Unload</button>
+                <button id="unload" style="color:gray;" class="codeButton">Unload</button>
             </div>
             
         `;
@@ -89,8 +89,6 @@ class EditorExtension extends Autodesk.Viewing.Extension {
     }
 
     setExtensionParams(extensionName, extensionLocation) {
-        // Editor integration
-        // let sampleExtension = "TemplateExtension";
 
         const editArea = document.getElementById("editor");
         let relativeLocation = document.location.origin;
@@ -124,10 +122,16 @@ class EditorExtension extends Autodesk.Viewing.Extension {
             }
             eval(this.editor.getValue());
             viewer.loadExtension(extensionName);
+            loadButton.style.color = "green";
+            loadButton.innerText = "Extension active";
+            unloadButton.style.color = "white";
         };
 
         unloadButton.onclick = () => {
             unloadExtension(extensionName);
+            loadButton.style.color = "white";
+            loadButton.innerText = "Load";
+            unloadButton.style.color = "gray";
         };
     }
 }
