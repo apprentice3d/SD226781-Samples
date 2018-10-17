@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" width="194" height="56" viewBox="0, 0, 194, 56">
+  <g id="Layer_1" transform="translate(-7, 0)">
+    <g>
+      <g>
+        <path d="M8.5,16.5 L200.5,16.5 L200.5,40.5 L8.5,40.5 L8.5,16.5 z" fill="#FFFFFF"/>
+        <path d="M8.5,16.5 L200.5,16.5 L200.5,40.5 L8.5,40.5 L8.5,16.5 z" fill-opacity="0" stroke="#000000" stroke-width="1"/>
+      </g>
+      <path d="M8,16 L44,16 L44,40 L8,40 L8,16 z" fill="#73CEFF" fill-opacity="0.7"/>
+      <path d="M44,16 L84,16 L84,40 L44,40 L44,16 z" fill="#92CF00" fill-opacity="0.7"/>
+      <path d="M84,16 L124,16 L124,40 L84,40 L84,16 z" fill="#FFF365" fill-opacity="0.7"/>
+      <path d="M124,16 L164,16 L164,40 L124,40 L124,16 z" fill="#FFA923" fill-opacity="0.7"/>
+      <path d="M164,16 L200,16 L200,40 L164,40 L164,16 z" fill="#FF1600" fill-opacity="0.7"/>
+    </g>
+    <text transform="matrix(1, 0, 0, 1, 22.89, 8)">
+      <tspan x="-10.89" y="4" font-family="HelveticaNeue-CondensedBlack" font-size="12" fill="#050505">Cold</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, 184, 8)">
+      <tspan x="-14.34" y="4" font-family="HelveticaNeue-CondensedBlack" font-size="12" fill="#050505">Warm</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, 22.89, 48)">
+      <tspan x="-10.134" y="2" font-family="HelveticaNeue-CondensedBold" font-size="10" fill="#050505">19</tspan>
+      <tspan x="-0.534" y="2" font-family="Times-Roman" font-size="10" kerning="0" fill="#000000">°C</tspan>
+    </text>
+    <text transform="matrix(1, 0, 0, 1, 186.534, 48)">
+      <tspan x="-10.134" y="2" font-family="HelveticaNeue-CondensedBold" font-size="10" kerning="0" fill="#000000">26</tspan>
+      <tspan x="-0.534" y="2" font-family="Times-Roman" font-size="10" kerning="0" fill="#000000">°C</tspan>
+    </text>
+  </g>
+</svg>

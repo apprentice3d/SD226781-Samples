@@ -17,9 +17,9 @@
 </head>
 <body>
     <div id="page_navigation">
-        <a href="./02.html" class="arrow-left" ></a>
-        <span> Custom Material </span>
-        <a href="./03a.html" class="arrow-right"></a>
+        <a href="./03.html" class="arrow-left" ></a>
+        <span> Custom Material Final</span>
+        <a href="./04.html" class="arrow-right"></a>
     </div>
     <!-- The Viewer will be instantiated here -->
     <div id="MyViewerDiv"></div>
@@ -89,7 +89,7 @@
         viewer.loadExtension('EditorExtension').then(
             function(myExtension) {
 
-                myExtension.setExtensionParams("MaterialExtension", "/extensions/MaterialExt.js");
+                myExtension.setExtensionParams("TempColorExtension", "/extensions/TempColorExt.js");
             })
     }
     function onItemLoadFail(errorCode) {
