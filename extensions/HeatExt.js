@@ -15,49 +15,26 @@ class HeatExtension extends Autodesk.Viewing.Extension {
 
         this.customize = this.customize.bind(this);
         this.createShaderMaterial = this.createShaderMaterial.bind(this);
+        this.createShadeMaterialWithOffset = this.createShadeMaterialWithOffset.bind(this);
         this.getBounds = this.getBounds.bind(this);
         this.processSelection = this.processSelection.bind(this);
+        this.computeClickRelativeToFloorPosition = this.computeClickRelativeToFloorPosition.bind(this);
 
 
-        this.vertexShader = `
-              precision mediump float;
-  
-              attribute vec2 inPos;
-              varying vec2 vertPos;
-              
-              void main()
-              {
-                  vertPos = inPos;
-                  gl_Position = vec4( inPos.xy, 0.0, 1.0 );
-              }
-        ` ;
+        // constants put here for optimization only
+        this.floorID = 269;
+        this.floorFragmentID = 0;
+        this.bounds = {
+            height: 53.08399200439453,
+            width: 115.7926254272461
+        };
 
-        this.fragmentShader = `
-          precision mediump float;
- 
-          varying vec2 vertPos;
-          uniform vec2 resolution;
-          
-             void main() {
-                  vec2 pos_ndc = 2.0 * gl_FragCoord.xy / resolution.xy - 1.0;
-                  float dist = length(pos_ndc);
-                  
-                  vec4 white = vec4(1.0, 1.0, 1.0, 1.0);
-                  vec4 red = vec4(1.0, 0.0, 0.0, 1.0);
-                  vec4 blue = vec4(0.0, 0.0, 1.0, 1.0);
-                  vec4 green = vec4(0.0, 1.0, 0.0, 1.0);
-                  float step1 = 0.0;
-                  float step2 = 0.33;
-                  float step3 = 0.66;
-                  float step4 = 1.0;
-                
-                  vec4 color = mix(white, red, smoothstep(step1, step2, dist));
-                  color = mix(color, blue, smoothstep(step2, step3, dist));
-                  color = mix(color, green, smoothstep(step3, step4, dist));
-                
-                  gl_FragColor = color;
-        }
-        `;
+        this.textureCoords = {
+            maxWidth: 1.647,
+            maxHeight: 0.99,
+            minWidth: -0.49,
+            minHeight: 0.02
+        };
 
     }
 
@@ -87,30 +64,52 @@ class HeatExtension extends Autodesk.Viewing.Extension {
     }
 
     processSelection(event) {
-        let floorID = 269;
+
         let selection = this.viewer.getSelection();
 
-        if(selection.length !== 0 && selection[0] === 269) {
+        if(selection.length !== 0 && selection[0] === this.floorID) {
             this.viewer.select(); //clear selection
-            console.log(this.viewer.clientToWorld(event.clientX, event.clientY, true));
+            let intersectPoint = this.viewer.clientToWorld(event.clientX, event.clientY, true).intersectPoint;
+            let offset = this.computeClickRelativeToFloorPosition(intersectPoint, this.bounds, this.textureCoords);
+            console.log(offset);
+
+            this.myMaterial = this.createShadeMaterialWithOffset(offset.X,offset.Y,this.bounds);
+
+            viewer.model.getFragmentList().setMaterial(this.floorFragmentID, this.myMaterial);
+
+            viewer.impl.sceneUpdated(true);
+            viewer.impl.invalidate(true);
 
         }
-        else {
+    }
 
-        }
+    computeClickRelativeToFloorPosition(intersectionPoint, bounds, texCoord) {
+        let maxWidth = bounds.width/2*-1;
+        let minWidth = bounds.width/2;
+        let maxHeight = bounds.height/2;
+        let minHeight = bounds.height/2*-1;
+
+        let A = (texCoord.minWidth - texCoord.maxWidth)/(minWidth-maxWidth);
+        let B = texCoord.maxWidth - A*maxWidth;
+        let offSetX = A*intersectionPoint.x + B;
+
+        A = (texCoord.minHeight - texCoord.maxHeight)/(minHeight-maxHeight);
+        B = texCoord.maxHeight - A*maxHeight;
+        let offSetY = A*intersectionPoint.y + B;
+
+        return {X: offSetX, Y: offSetY}
     }
 
     customize() {
 
         //Start custom code here ...
         let viewer = this.viewer;
-        let floorFragmentID = 0;
 
 
 
         let floorBox = new THREE.Box3();
         this.viewer.model.getFragmentList()
-            .getWorldBounds(floorFragmentID, floorBox);
+            .getWorldBounds(this.floorFragmentID, floorBox);
 
         const width = Math.abs(floorBox.max.x - floorBox.min.x);
         const height = Math.abs(floorBox.max.y - floorBox.min.y);
@@ -120,13 +119,85 @@ class HeatExtension extends Autodesk.Viewing.Extension {
             width: width,
             height: height};
 
-        this.myMaterial = this.createShaderMaterial(bounds);
+        console.log(bounds);
 
-        viewer.model.getFragmentList().setMaterial(floorFragmentID, this.myMaterial);
+        // this.myMaterial = this.createShaderMaterial(bounds);
+        this.myMaterial = this.createShadeMaterialWithOffset(0.5,0.5,bounds);
+
+        viewer.model.getFragmentList().setMaterial(this.floorFragmentID, this.myMaterial);
 
         viewer.impl.sceneUpdated(true);
         viewer.impl.invalidate(true);
 
+    }
+
+    createShadeMaterialWithOffset(offsetX, offsetY, bounds) {
+        const uniforms = {
+            height: {
+                type: 'f',
+                value: bounds.height
+            },
+            offsetx: {
+                type: 'f',
+                value: offsetX
+            },
+            offsety: {
+                type: 'f',
+                value: offsetY
+            },
+            texture1: {
+                type: "t",
+                value: THREE.ImageUtils.loadTexture( "../img/radial.png" )
+            }
+        };
+
+        const myVertexShader =  `
+        varying vec2 vUv;
+        uniform float height;
+        uniform float offsetx;
+        uniform float offsety;
+        
+        void main() {
+             
+            vec3 projection = vec3(position.x, position.y, 0.);
+        
+            vUv = vec2((projection.x) / height + offsetx,
+                (height + projection.y) / height - offsety);
+
+            vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+                    gl_Position = projectionMatrix * mvPosition;
+        }
+        ` ;
+
+        const myFragmentShader = `
+        uniform sampler2D texture1;
+        varying vec2 vUv;
+        
+             void main() {
+             // gl_FragColor = vec4(0,0,1, 1);
+             gl_FragColor = texture2D(texture1, vUv);
+        }
+        `;
+
+        const material = new THREE.ShaderMaterial({
+            uniforms: uniforms,
+            vertexShader: myVertexShader,
+            fragmentShader: myFragmentShader,
+            side: THREE.DoubleSide,
+        });
+
+        const materials = this.viewer.impl.matman();
+
+        materials.removeMaterial("MyTextureShaderMaterial");
+
+        materials.addMaterial(
+            "MyTextureShaderMaterial",
+            material,
+            true);
+
+        viewer.impl.invalidate(true);
+
+        return material;
     }
 
 
@@ -140,12 +211,12 @@ class HeatExtension extends Autodesk.Viewing.Extension {
         void main() {
             // vUv = uv;
             
-            float OFFSET_X = 0.0;//0.5;
-            float OFFSET_Y = 0.0;//0.5;
+            float OFFSET_X = 0.5;//0.5;
+            float OFFSET_Y = 0.5;//0.5;
              
             vec3 projection = vec3(position.x, position.y, 0.);
         
-            vUv = vec2((projection.x) / width + OFFSET_X,
+            vUv = vec2((projection.x) / height + OFFSET_X,
                 (height + projection.y) / height - OFFSET_Y);
 
             vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
@@ -187,6 +258,8 @@ class HeatExtension extends Autodesk.Viewing.Extension {
         });
 
         const materials = this.viewer.impl.matman();
+
+        materials.removeMaterial("MyTextureShaderMaterial");
 
         materials.addMaterial(
             "MyTextureShaderMaterial",
