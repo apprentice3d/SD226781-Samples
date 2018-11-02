@@ -4,12 +4,8 @@
     <title>SD226781_Samples</title>
 
     <!-- Autodesk Forge libs-->
-    <!--<link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.min.css?v=3.2.1" type="text/css">-->
-    <!--<script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.js?v=3.2.1"></script>-->
     <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/6.*/style.min.css" type="text/css">
     <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/6.*/viewer3D.min.js"></script>
-
-
 
     <!-- custom libs-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.1/ace.js" integrity="sha256-kCykSp9wgrszaIBZpbagWbvnsHKXo4noDEi6ra6Y43w=" crossorigin="anonymous"></script>
@@ -21,9 +17,9 @@
 </head>
 <body>
     <div id="page_navigation">
-        <a href="./index.html" class="arrow-left" ></a>
-        <span> WebVR Extension </span>
-        <a href="./01.html" class="arrow-right"></a>
+        <a href="./03b.html" class="arrow-left" ></a>
+        <span> Custom Material Final</span>
+        <a href="./04.html" class="arrow-right"></a>
     </div>
     <!-- The Viewer will be instantiated here -->
     <div id="MyViewerDiv"></div>
@@ -32,16 +28,11 @@
     <!-- Developer JS -->
 <script>
 
-
-    // const avp = Autodesk.Viewing.Private;
-    // const av = Autodesk.Viewing;
-
     const divID = 'MyViewerDiv';
-    // const documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6ZXhwZXJpbWVudF9yZXBvL0hlbGxvJTIwV29ybGQucnZ0';
     const documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bmlhZ2FyYS1wb2MvQk9mZmljZV9uZXdfUm9vbXMubndk';
     const tokenFetchingUrl = "https://9irt90dm6j.execute-api.us-east-1.amazonaws.com/prod";
 
-    let extensionArray = ['Autodesk.Viewing.WebVR'];
+    let extensionArray = [];
 
     let viewerApp = new Autodesk.Viewing.ViewingApplication(divID);
     let viewer = null;
@@ -64,8 +55,7 @@
     };
 
     let config3d = {
-        extensions: extensionArray,
-        // experimental: [ 'webVR_orbitModel' ]
+        extensions: extensionArray
     };
 
 
@@ -99,7 +89,7 @@
         viewer.loadExtension('EditorExtension').then(
             function(myExtension) {
 
-                myExtension.setExtensionParams("", "/extensions/WebVR.js");
+                myExtension.setExtensionParams("TempColorExtension", "/extensions/TempColorExt.js");
             })
     }
     function onItemLoadFail(errorCode) {

@@ -59,6 +59,63 @@ class TransformExtension extends Autodesk.Viewing.Extension {
         dummy_center.add(dummy_mainArm);
 
 
+
+        // /* ====================== SecondAxis ================= */
+
+        let ID_LowerRodBody = 8;
+        let ID_MiddleArmBody = 6;
+
+        let Pivot_LowerRodBody = new THREE.Mesh(new THREE.BoxGeometry(5, 5, 10), new THREE.MeshBasicMaterial({ color: 0xff0000 }));
+        let Position_LowerRodBody = this.getFragmentWorldMatrixByNodeId(ID_LowerRodBody).matrix[0].getPosition().clone();
+
+        Pivot_LowerRodBody.position.x = Position_LowerRodBody.x - dummy_center.position.x;
+        Pivot_LowerRodBody.position.y = Position_LowerRodBody.y - dummy_center.position.y;
+        Pivot_LowerRodBody.position.z = Position_LowerRodBody.z - dummy_center.position.z;
+        dummy_center.add(Pivot_LowerRodBody);
+
+        let Helper_LowerRodBody = new THREE.Mesh(new THREE.BoxGeometry(5, 10, 5), new THREE.MeshBasicMaterial({ color: 0x00ff00 }));
+        Helper_LowerRodBody.position.x = - Position_LowerRodBody.x + Math.abs(Position_LowerRodBody.x - Pivot_LowerRodBody.position.x - dummy_center.position.x);
+        Helper_LowerRodBody.position.y = - Position_LowerRodBody.y + Math.abs(Position_LowerRodBody.y - Pivot_LowerRodBody.position.y - dummy_center.position.y);
+        Helper_LowerRodBody.position.z = - Position_LowerRodBody.z + Math.abs(Position_LowerRodBody.z - Pivot_LowerRodBody.position.z - dummy_center.position.z);
+        Pivot_LowerRodBody.add(Helper_LowerRodBody);
+
+        let Helper_MiddleArmBody = new THREE.Mesh(new THREE.BoxGeometry(5, 10, 5), new THREE.MeshBasicMaterial({ color: 0x0000ff }));
+        let Position_MiddleArmBody = this.getFragmentWorldMatrixByNodeId(ID_MiddleArmBody).matrix[0].getPosition().clone();
+        Helper_MiddleArmBody.position.x = - Position_MiddleArmBody.x + Math.abs(Position_MiddleArmBody.x - Pivot_LowerRodBody.position.x - dummy_center.position.x);
+        Helper_MiddleArmBody.position.y = - Position_MiddleArmBody.y + Math.abs(Position_MiddleArmBody.y - Pivot_LowerRodBody.position.y - dummy_center.position.y);
+        Helper_MiddleArmBody.position.z = - Position_MiddleArmBody.z + Math.abs(Position_MiddleArmBody.z - Pivot_LowerRodBody.position.z - dummy_center.position.z);
+        Pivot_LowerRodBody.add(Helper_MiddleArmBody);
+
+
+
+
+
+        /*============= CONTROLS ================*/
+        let baseControlSlider = document.getElementById("baseControl");
+
+        baseControlSlider.oninput = (event) => {
+
+            dummy_center.rotation.y = Math.PI/180 * event.target.value;
+            this.assignTransformations(dummy_mainArm, mainArmID);
+            this.assignTransformations(Helper_LowerRodBody, ID_LowerRodBody);
+            this.assignTransformations(Helper_MiddleArmBody, ID_MiddleArmBody);
+            this.viewer.impl.sceneUpdated(true);
+        };
+
+        let firstArmSlider = document.getElementById("firstArm");
+
+        firstArmSlider.oninput = (event) => {
+
+            Pivot_LowerRodBody.rotation.z = -Math.PI/180 * event.target.value;
+            this.assignTransformations(Helper_MiddleArmBody, ID_MiddleArmBody);
+            this.viewer.impl.sceneUpdated(true);
+        };
+
+
+
+
+
+        /*============= BASIC ANIMATION ================*/
         let animate = () => {
             requestAnimationFrame(animate);
             dummy_center.rotation.y += 0.01;
@@ -68,15 +125,7 @@ class TransformExtension extends Autodesk.Viewing.Extension {
 
         // animate();
 
-        let baseControlSlider = document.getElementById("baseControl");
 
-        baseControlSlider.oninput = (event) => {
-
-            dummy_center.rotation.y = Math.PI/180 * event.target.value;
-            console.log(Math.PI/180 * event.target.value);
-            this.assignTransformations(dummy_mainArm, mainArmID);
-            this.viewer.impl.sceneUpdated(true);
-        }
 
 
     }

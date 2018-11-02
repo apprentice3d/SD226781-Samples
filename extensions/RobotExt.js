@@ -247,6 +247,8 @@ class RobotExtension extends Autodesk.Viewing.Extension {
         this.viewer.impl.setPostProcessParameter("style", "edging");
         this.viewer.impl.setPostProcessParameter("depthEdges", false);
         this.viewer.setBackgroundColor(255,255,255,255,255,255);
+        this.viewer.setGroundShadow(false);
+        this.viewer.setGroundReflection(true);
         this.viewer.setTheme("light-theme");
 
     }

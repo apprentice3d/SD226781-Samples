@@ -135,3 +135,51 @@ body {
     height: 200px;
     resize: none;
 }
+#u3ControlPanelContainer {
+    bottom: 80px;
+    right: 20px;
+    width: 300px;
+    height: 300px;
+    resize: none;
+    padding-top: 0;
+    margin: 0;
+}
+
+
+
+
+.controlBlock {
+    display: grid;
+    grid-template-columns: 60px auto 25px;
+    grid-column-gap: 10px;
+    grid-template-rows: auto;
+    vertical-align: middle;
+    margin: 0 10px;
+    font-size: large;
+    width: 90%;
+
+}
+
+.controlBlock span {
+    width: auto;
+    margin: 0;
+    padding: 0;
+}
+
+.controlBlock input {
+    margin: auto 0;
+    padding: 0;
+    width: auto;
+}
+
+
+
+#U3_Control_UI {
+    padding-top: 10px;;
+}
+
+
+
+/*.adsk-viewing-viewer.light-theme .adsk-control-group {*/
+    /*background-color: rgba(0,0,0,0);*/
+/*}*/
