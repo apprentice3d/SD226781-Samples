@@ -66,9 +66,6 @@ class HeatExtension extends Autodesk.Viewing.Extension {
 
         this.tree = this.viewer.model.getData().instanceTree;
 
-        // this.viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT,
-        //     this.processSelection);
-
         document.addEventListener('click', this.processSelection);
 
         //Hide all room bodies
@@ -85,8 +82,6 @@ class HeatExtension extends Autodesk.Viewing.Extension {
         viewer.impl.invalidate(true);
 
         document.removeEventListener('click', this.processSelection);
-        // this.viewer.removeEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT,
-        //     this.processSelection);
 
         return true;
     }
@@ -145,8 +140,8 @@ class HeatExtension extends Autodesk.Viewing.Extension {
         void main() {
             // vUv = uv;
             
-            float OFFSET_X = 0.5;
-            float OFFSET_Y = 0.5;
+            float OFFSET_X = 0.0;//0.5;
+            float OFFSET_Y = 0.0;//0.5;
              
             vec3 projection = vec3(position.x, position.y, 0.);
         
