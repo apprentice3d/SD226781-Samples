@@ -25,15 +25,15 @@ class HeatExtension extends Autodesk.Viewing.Extension {
         this.floorID = 269;
         this.floorFragmentID = 0;
         this.bounds = {
-            height: 53.08399200439453,
-            width: 115.7926254272461
+            height: 53.08399200439453*2,
+            width: 115.7926254272461*2
         };
 
         this.textureCoords = {
-            maxWidth: 1.647,
-            maxHeight: 0.99,
-            minWidth: -0.49,
-            minHeight: 0.02
+            maxWidth:  0.746,
+            maxHeight: 0.742,
+            minWidth: 0.255,
+            minHeight: 0.259,
         };
 
     }
@@ -84,10 +84,10 @@ class HeatExtension extends Autodesk.Viewing.Extension {
     }
 
     computeClickRelativeToFloorPosition(intersectionPoint, bounds, texCoord) {
-        let maxWidth = bounds.width/2*-1;
-        let minWidth = bounds.width/2;
-        let maxHeight = bounds.height/2;
-        let minHeight = bounds.height/2*-1;
+        let maxWidth = bounds.width/4*-1;
+        let minWidth = bounds.width/4;
+        let maxHeight = bounds.height/4;
+        let minHeight = bounds.height/4*-1;
 
         let A = (texCoord.minWidth - texCoord.maxWidth)/(minWidth-maxWidth);
         let B = texCoord.maxWidth - A*maxWidth;
@@ -122,7 +122,7 @@ class HeatExtension extends Autodesk.Viewing.Extension {
         console.log(bounds);
 
         // this.myMaterial = this.createShaderMaterial(bounds);
-        this.myMaterial = this.createShadeMaterialWithOffset(0.5,0.5,bounds);
+        this.myMaterial = this.createShadeMaterialWithOffset(0.5,0.5,this.bounds);
 
         viewer.model.getFragmentList().setMaterial(this.floorFragmentID, this.myMaterial);
 
@@ -136,6 +136,10 @@ class HeatExtension extends Autodesk.Viewing.Extension {
             height: {
                 type: 'f',
                 value: bounds.height
+            },
+            width: {
+                type: 'f',
+                value: bounds.width
             },
             offsetx: {
                 type: 'f',
@@ -154,6 +158,7 @@ class HeatExtension extends Autodesk.Viewing.Extension {
         const myVertexShader =  `
         varying vec2 vUv;
         uniform float height;
+        uniform float width;
         uniform float offsetx;
         uniform float offsety;
         
@@ -161,7 +166,7 @@ class HeatExtension extends Autodesk.Viewing.Extension {
              
             vec3 projection = vec3(position.x, position.y, 0.);
         
-            vUv = vec2((projection.x) / height + offsetx,
+            vUv = vec2((projection.x) / width + offsetx,
                 (height + projection.y) / height - offsety);
 
             vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
