@@ -48,6 +48,12 @@ class HeatExtension extends Autodesk.Viewing.Extension {
         //Hide all room bodies
         this.viewer.hide(370);
 
+        this.viewer.setBackgroundColor(255,255,255,255,255,255);
+        this.viewer.setEnvMapBackground(false);
+        this.viewer.setGroundShadow(true);
+        this.viewer.setGroundReflection(true);
+        this.viewer.setTheme("light-theme");
+
         this.customize();
 
         return true;

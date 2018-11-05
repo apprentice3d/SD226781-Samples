@@ -89,7 +89,7 @@ class U3ControlExtension extends Autodesk.Viewing.Extension {
         this.viewer.setTheme("light-theme");
         this.prepareTheModel();
         this.setupUI();
-        this.animateComponents();
+        // this.animateComponents();
 
     }
 
