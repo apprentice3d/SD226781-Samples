@@ -85,7 +85,6 @@ class ShaderExtension extends Autodesk.Viewing.Extension {
         const width = Math.abs(floorBox.max.x - floorBox.min.x);
         const height = Math.abs(floorBox.max.y - floorBox.min.y);
 
-        // min is used to shift for the shader, the others are roof dimensions
         let bounds =  {
             width: width,
             height: height};

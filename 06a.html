@@ -9,17 +9,20 @@
 
     <!-- custom libs-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.1/ace.js" integrity="sha256-kCykSp9wgrszaIBZpbagWbvnsHKXo4noDEi6ra6Y43w=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+    <script src="./lib/viewer_toolkit.js"></script>
 
     <link rel="stylesheet" href="./css/main.css" type="text/css">
     <script src="./extensions/EditorExt.js"></script>
 
 
+
 </head>
 <body>
     <div id="page_navigation">
-        <a href="./03a.html" class="arrow-left" ></a>
-        <span> Heat Map </span>
-        <a href="./04.html" class="arrow-right"></a>
+        <a href="./06.html" class="arrow-left" ></a>
+        <span> Bringing together </span>
+        <a href="./06a.html" class="arrow-right"></a>
     </div>
     <!-- The Viewer will be instantiated here -->
     <div id="MyViewerDiv"></div>
@@ -29,8 +32,8 @@
 <script>
 
     const divID = 'MyViewerDiv';
-    const documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bmlhZ2FyYS1wb2MvQk9mZmljZV9uZXdfUm9vbXMubndk';
-    const tokenFetchingUrl = "https://9irt90dm6j.execute-api.us-east-1.amazonaws.com/prod";
+    const documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6dW5pdmVyc2FsLXJvYm90cy9VUjMuZjNk';
+    const tokenFetchingUrl = "https://fg9ysg979c.execute-api.ca-central-1.amazonaws.com/prod/";
 
     let extensionArray = [];
 
@@ -89,7 +92,7 @@
         viewer.loadExtension('EditorExtension').then(
             function(myExtension) {
 
-                myExtension.setExtensionParams("HeatExtension", "/extensions/HeatExt.js");
+                myExtension.setExtensionParams("U3ControlExtension", "/extensions/u3ControlExt.js");
             })
     }
     function onItemLoadFail(errorCode) {

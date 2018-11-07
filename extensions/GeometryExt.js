@@ -85,5 +85,7 @@ function temp()  {
 
 /*
 
+this.viewer.impl.setPostProcessParameter("style", "edging");
+this.viewer.impl.setPostProcessParameter("depthEdges", false);
 
  */

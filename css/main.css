@@ -145,7 +145,15 @@ body {
     margin: 0;
 }
 
-
+#xArmControlPanelContainer {
+    bottom: 80px;
+    right: 20px;
+    width: 300px;
+    height: 300px;
+    resize: none;
+    padding-top: 0;
+    margin: 0;
+}
 
 
 .controlBlock {

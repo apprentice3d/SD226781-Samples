@@ -21,8 +21,8 @@
 <body>
     <div id="page_navigation">
         <a href="./05.html" class="arrow-left" ></a>
-        <span> Bringing together </span>
-        <a href="./07.html" class="arrow-right"></a>
+        <span> More serious </span>
+        <a href="./06a.html" class="arrow-right"></a>
     </div>
     <!-- The Viewer will be instantiated here -->
     <div id="MyViewerDiv"></div>
@@ -32,8 +32,8 @@
 <script>
 
     const divID = 'MyViewerDiv';
-    const documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6dW5pdmVyc2FsLXJvYm90cy9VUjMuZjNk';
-    const tokenFetchingUrl = "https://fg9ysg979c.execute-api.ca-central-1.amazonaws.com/prod/";
+    const documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bWltaWtyb25fcHJvamVjdC94QXJtLmYzZA';
+    const tokenFetchingUrl = "https://9irt90dm6j.execute-api.us-east-1.amazonaws.com/prod";
 
     let extensionArray = [];
 
@@ -92,7 +92,7 @@
         viewer.loadExtension('EditorExtension').then(
             function(myExtension) {
 
-                myExtension.setExtensionParams("U3ControlExtension", "/extensions/u3ControlExt.js");
+                myExtension.setExtensionParams("xArmControlExtension", "/extensions/xArmControlExt.js");
             })
     }
     function onItemLoadFail(errorCode) {
