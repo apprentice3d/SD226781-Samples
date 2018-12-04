@@ -51,11 +51,10 @@ class MaterialExtension extends Autodesk.Viewing.Extension {
 
         this.tree.enumNodeFragments(roomID, (fragId) => {
             viewer.model.getFragmentList().setMaterial(fragId, myMaterial);
+
+            /* important technique if you want to remove z-fighting */
             let fragProxy = viewer.impl.getFragmentProxy(viewer.model, fragId);
-
-            // to rescale and remove the z-fighting
-            fragProxy.scale = new THREE.Vector3(scaleRatio,scaleRatio,scaleRatio);
-
+            // fragProxy.scale = new THREE.Vector3(scaleRatio,scaleRatio,scaleRatio);
             fragProxy.updateAnimTransform();
         });
 
@@ -92,14 +91,4 @@ Autodesk.Viewing.theExtensionManager.registerExtension('MaterialExtension',
 
 
 
-// simple goodies
 
-// this.viewer.impl.setPostProcessParameter("style", "edging");
-// this.viewer.impl.setPostProcessParameter("depthEdges", false);
-
-
-
-/*
-
-
- */

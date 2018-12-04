@@ -252,7 +252,7 @@ class U3ControlExtension extends Autodesk.Viewing.Extension {
 
         if (panel == null) {
             panel = new U3ControlPanel(viewer, viewer.container,
-                'u3ControlPanel', 'U3 Control Panel', {"innerDiv":customUI});
+                'u3ControlPanel', 'U3 Control Panel', {"innerDiv": customUI});
         }
 
         toolbarButtonU3.onClick = (e) => {
@@ -270,6 +270,48 @@ class U3ControlExtension extends Autodesk.Viewing.Extension {
 
         this.viewer.toolbar.addControl(this.subToolbar);
 
+        this.resetButton = document.createElement('button');
+        this.resetButton.innerText = "RESET";
+        this.resetButton.style = `
+            text-align: center;
+            margin: 5px 20%;
+            width: 60%;
+            height: 20px;
+        `;
+
+
+        this.resetButton.onclick = () => {
+
+            let axis01 = document.getElementById('axis01');
+            let axis02 = document.getElementById('axis02');
+            let axis03 = document.getElementById('axis03');
+            let axis04 = document.getElementById('axis04');
+            let axis05 = document.getElementById('axis05');
+            let axis06 = document.getElementById('axis06');
+            let axis07 = document.getElementById('axis07');
+            let axis08 = document.getElementById('axis08');
+            console.log(axis01);
+            axis01.value = 0;
+            axis02.value = 0;
+            axis03.value = 0;
+            axis04.value = 0;
+            axis05.value = 0;
+            axis06.value = 0;
+            axis07.value = 0;
+            axis08.value = 0;
+
+            this.rotateAxis01({target: {value: 0}});
+            this.rotateAxis02({target: {value: 0}});
+            this.rotateAxis03({target: {value: 0}});
+            this.rotateAxis04({target: {value: 0}});
+            this.rotateAxis05({target: {value: 0}});
+            this.rotateAxis06({target: {value: 0}});
+            this.rotateAxis07({target: {value: 0}});
+            this.rotateAxis08({target: {value: 0}});
+
+        };
+
+        customUI.appendChild(this.resetButton);
     }
 
     rotateAxis01(event) {

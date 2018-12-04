@@ -47,13 +47,15 @@ class GeometryExtension extends Autodesk.Viewing.Extension {
 
         this.viewer.impl.scene.add(this.some_mesh);
 
-        const materials = this.viewer.impl.getMaterials();
 
-        materials.addMaterial(
-            color.toString(16), material, true);
+        /* Important part if you want your material to be "seen" by the scene lights*/
+        // const materials = this.viewer.impl.getMaterials();
+        //
+        // materials.addMaterial(
+        //     color.toString(16), material, true);
 
+        viewer.impl.invalidate(true);
         this.viewer.impl.sceneUpdated(true);
-
     }
 }
 
@@ -61,31 +63,9 @@ Autodesk.Viewing.theExtensionManager.registerExtension('GeometryExtension',
     GeometryExtension);
 
 
-//global THREE;
 
-function temp()  {
-
-
-
-    let geometry = new THREE.BoxGeometry( 1, 1, 1 );
-    let material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-    let cube = new THREE.Mesh( geometry, material );
-    scene.add( cube );
-
-
-
-}
-
-// simple goodies
-
-// this.viewer.impl.setPostProcessParameter("style", "edging");
-// this.viewer.impl.setPostProcessParameter("depthEdges", false);
-
-
-
+/* some simple illustrations*/
 /*
-
-this.viewer.impl.setPostProcessParameter("style", "edging");
-this.viewer.impl.setPostProcessParameter("depthEdges", false);
-
+        this.viewer.impl.setPostProcessParameter("style", "edging");
+        this.viewer.impl.setPostProcessParameter("depthEdges", false);
  */

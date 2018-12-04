@@ -20,20 +20,19 @@ class ShaderExtension extends Autodesk.Viewing.Extension {
 
 
         this.vertexShader = `
-            varying vec3 fNormal; 
+           
             void main() {
             
-            fNormal = normal;
             vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
 				gl_Position = projectionMatrix * mvPosition;
         }
         ` ;
 
         this.fragmentShader = `
-            varying vec3 fNormal;
+            
              void main() {
-             // gl_FragColor = vec4(1,0,1, 1);
-             gl_FragColor = vec4(fNormal, 1);
+             
+             gl_FragColor = vec4(0,0,1, 1);
         }
         `;
 
@@ -208,10 +207,6 @@ class ShaderExtension extends Autodesk.Viewing.Extension {
 
         return material;
     }
-
-
-
-
 
 }
 

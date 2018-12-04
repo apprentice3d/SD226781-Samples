@@ -17,9 +17,9 @@
 </head>
 <body>
     <div id="page_navigation">
-        <a href="./00.html" class="arrow-left" ></a>
-        <span> Simple Extension </span>
-        <a href="./01b.html" class="arrow-right"></a>
+        <a href="./01.html" class="arrow-left" ></a>
+        <span> Controller Extension </span>
+        <a href="./02.html" class="arrow-right"></a>
     </div>
     <!-- The Viewer will be instantiated here -->
     <div id="MyViewerDiv"></div>
@@ -89,7 +89,7 @@
         viewer.loadExtension('EditorExtension').then(
             function(myExtension) {
 
-                myExtension.setExtensionParams("TemplateExtension", "/extensions/templateExt.js");
+                myExtension.setExtensionParams("XboxControllerExtension", "/extensions/xBoxControllerExt.js");
             })
     }
     function onItemLoadFail(errorCode) {

@@ -85,6 +85,11 @@ class EditorExtension extends Autodesk.Viewing.Extension {
         this.editor = ace.edit("editor");
         this.editor.setTheme("ace/theme/xcode");
         this.editor.session.setMode("ace/mode/javascript");
+        this.editor.setOptions({
+            // fontFamily: "tahoma",
+            fontSize: "14pt"
+        });
+
 
     }
 

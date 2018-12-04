@@ -29,19 +29,20 @@ Autodesk.Viewing.theExtensionManager.registerExtension('TemplateExtension',
 
 
 /* some simple illustrations*/
-// this.viewer.setEnvMapBackground(false);
-// this.viewer.setBackgroundColor(234, 136, 89, 240,235,223);
-
-// this.viewer.setLightPreset(13);
-// this.viewer.impl.setPostProcessParameter("style", "edging");
-// this.viewer.impl.setPostProcessParameter("depthEdges", false);
-
 /*
 
-viewer = viewerApp.getCurrentViewer();
+    this.viewer.setTheme('light-theme');
+    this.viewer.setEnvMapBackground(false);
+    this.viewer.setBackgroundColor(255,255,255,255,255,255);
 
-viewer.setTheme('light-theme');
-viewer.setEnvMapBackground(false);
-viewer.setBackgroundColor(255,255,255,255,255,255);
+
+    // on load
+    this.viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT,
+            (selection) => console.log(selection));
+
+    // on unload
+    this.viewer.removeEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT,
+            (selection) => console.log(selection));
+
 
 */

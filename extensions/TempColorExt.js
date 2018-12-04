@@ -3,6 +3,8 @@
 // to existing components
 // by Denis Grigor, August 2018
 //
+// this approach was used in https://bim.btib.fr
+//
 ///////////////////////////////////////////////////////////////////////////////
 
 class TempColorExtension extends Autodesk.Viewing.Extension {
@@ -267,3 +269,15 @@ class TempColorExtension extends Autodesk.Viewing.Extension {
 
 Autodesk.Viewing.theExtensionManager.registerExtension('TempColorExtension',
     TempColorExtension);
+
+
+/*  goodies
+
+Niagara-Forge - https://bim.btib.fr
+
+Provided by BTIB (https://www.btib.fr/framework-niagara)
+
+IoT real life example, illustrating the concept of Smart building - Forge Viewer used as UI for sensors attributed to each room.
+Check the about page on more information
+
+ */
